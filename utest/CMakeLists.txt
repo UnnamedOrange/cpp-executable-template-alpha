@@ -2,7 +2,14 @@ cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
 
 # Preproject #
 
-# Add something here if you need.
+if(NOT DEFINED app_sources)
+    message(
+        FATAL_ERROR
+        "Using CMake in test folder is not allowed. Please use /CMakeLists.txt."
+    )
+endif()
+
+# Note: Add something here if you need.
 
 # Project #
 
@@ -29,15 +36,18 @@ include(GoogleTest)
 
 # Add source files #
 
-set(sources "my_test.cpp")
+file(GLOB_RECURSE test_sources CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/source/*.cpp")
 
 # Create executable #
 
-add_executable(${PROJECT_NAME} ${sources})
+add_executable(${PROJECT_NAME} ${test_sources} ${app_sources} ${app_headers})
 set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD 17)
+target_include_directories(${PROJECT_NAME} PRIVATE ${app_include_directory})
 
 # Link libraries #
 
+# Note: use other packages here.
+target_link_libraries(${PROJECT_NAME} PRIVATE fmt::fmt-header-only)
 target_link_libraries(${PROJECT_NAME} PRIVATE GTest::gtest GTest::gtest_main)
 
 # Start test #
