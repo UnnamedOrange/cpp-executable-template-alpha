@@ -1,0 +1,49 @@
+name: CI
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+env:
+  CTEST_OUTPUT_ON_FAILURE: 1
+
+jobs:
+  Build and Test:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, windows-latest, macOS-latest]
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Run vcpkg
+        uses: lukka/run-vcpkg@v10.1
+        with:
+          vcpkgGitCommitId: b86c0c35b88e2bf3557ff49dc831689c2f085090
+
+      - name: Configure CMake
+        run: cmake -Bbuild -DCMAKE_TOOLCHAIN_FILE:STRING=${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake
+
+      - name: Build
+        run: cmake --build build --config Debug -j4
+
+      - name: Unit Test
+        run: |
+          cd build
+          ctest --build-config Debug
+
+  Check clang-format:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Check clang-format
+        uses: jidicula/clang-format-action@v4.5.0
