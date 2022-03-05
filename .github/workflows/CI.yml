@@ -58,4 +58,4 @@ jobs:
       - name: Check cmake-format
         uses: PuneetMatharu/cmake-format-lint-action@v1.0.0
         with:
-          args: --config-files ${{ github.workspace }}/.cmake-format --check
+          args: --config-files .cmake-format --check

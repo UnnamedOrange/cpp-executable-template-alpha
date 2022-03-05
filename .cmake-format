@@ -1,3 +1,4 @@
+---
 format:
   tab_size: 2
   line_width: 100
@@ -55,3 +56,4 @@ parse:
         COMPATIBILITY: 1
         VERSION_HEADER: 1
         DEPENDENCIES: +
+...
