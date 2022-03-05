@@ -47,3 +47,15 @@ jobs:
 
       - name: Check clang-format
         uses: jidicula/clang-format-action@v4.5.0
+
+  Check_cmake-format:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Check cmake-format
+        uses: PuneetMatharu/cmake-format-lint-action@v1.0.0
+        with:
+          args: --config-files .cmake-format --check

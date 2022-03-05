@@ -3,10 +3,7 @@ cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
 # Preproject #
 
 if(NOT DEFINED app_sources)
-    message(
-        FATAL_ERROR
-        "Using CMake in test folder is not allowed. Please use /CMakeLists.txt."
-    )
+  message(FATAL_ERROR "Using CMake in test folder is not allowed. Please use /CMakeLists.txt.")
 endif()
 
 # Note: Add something here if you need.
@@ -15,18 +12,18 @@ endif()
 
 # Note: update this to your new project's name and version.
 project(
-    utest
-    VERSION 0.0.0
-    LANGUAGES CXX
+  utest
+  VERSION 0.0.0
+  LANGUAGES CXX
 )
 
 # Include guards #
 
 if(PROJECT_SOURCE_DIR STREQUAL PROJECT_BINARY_DIR)
-    message(
-        FATAL_ERROR
-        "In-source builds not allowed. Please make a new directory (called a build directory) and run CMake from there."
-    )
+  message(
+    FATAL_ERROR
+      "In-source builds not allowed. Please make a new directory (called a build directory) and run CMake from there."
+  )
 endif()
 
 # Find packages #
@@ -53,3 +50,4 @@ target_link_libraries(${PROJECT_NAME} PRIVATE GTest::gtest GTest::gtest_main)
 # Start test #
 
 gtest_discover_tests(${PROJECT_NAME})
+ 
