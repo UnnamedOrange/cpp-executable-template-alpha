@@ -12,7 +12,7 @@ env:
   CTEST_OUTPUT_ON_FAILURE: 1
 
 jobs:
-  Build and Test:
+  Build_and_Test:
     runs-on: ${{ matrix.os }}
     strategy:
       matrix:
@@ -38,7 +38,7 @@ jobs:
           cd build
           ctest --build-config Debug
 
-  Check clang-format:
+  Check_clang-format:
     runs-on: ubuntu-latest
 
     steps:
