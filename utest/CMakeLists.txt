@@ -50,4 +50,3 @@ target_link_libraries(${PROJECT_NAME} PRIVATE GTest::gtest GTest::gtest_main)
 # Start test #
 
 gtest_discover_tests(${PROJECT_NAME})
- 
