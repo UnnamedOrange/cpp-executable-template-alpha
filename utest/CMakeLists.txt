@@ -14,6 +14,8 @@ endif()
 project(
   utest
   VERSION 0.0.0
+  DESCRIPTION "Unit test for the main project"
+  HOMEPAGE_URL "https://github.com/UnnamedOrange/cpp-executable-template-alpha"
   LANGUAGES CXX
 )
 
@@ -38,7 +40,12 @@ file(GLOB_RECURSE test_sources CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/so
 # Create executable #
 
 add_executable(${PROJECT_NAME} ${test_sources} ${app_sources} ${app_headers})
-set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD 17)
+set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD ${CMAKE_CXX_STANDARD})
+if(MSVC)
+  target_compile_options(${PROJECT_NAME} PRIVATE /W4 /WX)
+else()
+  target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Wpedantic -Werror)
+endif()
 target_include_directories(${PROJECT_NAME} PRIVATE ${app_include_directory})
 
 # Link libraries #
