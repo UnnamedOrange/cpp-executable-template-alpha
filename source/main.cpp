@@ -5,6 +5,6 @@
 
 int main()
 {
-    auto str = fmt::format("{1:d}", 233);
+    auto str = fmt::format("{0:d}", 233);
     std::cout << str << std::endl;
 }
