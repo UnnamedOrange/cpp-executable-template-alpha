@@ -4,3 +4,4 @@ AccessModifierOffset: -4
 BraceWrapping:
   AfterCaseLabel: true
   AfterUnion: true
+NamespaceIndentation: All

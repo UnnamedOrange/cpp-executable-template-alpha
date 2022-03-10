@@ -1,10 +1,12 @@
-#include <iostream>
-#include <string>
-
 #include <fmt/format.h>
+
+#include <utils/mymath.h>
+
+using namespace App;
+using namespace App::utils::mymath;
 
 int main()
 {
-    auto str = fmt::format("{0:d}", 233);
-    std::cout << str << std::endl;
+    auto result = add(1, 2);
+    fmt::print("{0:03d}", result);
 }
