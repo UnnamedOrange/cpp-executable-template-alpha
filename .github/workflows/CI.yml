@@ -17,22 +17,7 @@ jobs:
     strategy:
       matrix:
         os: [windows-latest, ubuntu-latest, macOS-latest]
-        compiler: [gcc-latest, llvm-latest]
         build_type: [Debug, Release]
-        generator: ["Ninja Multi-Config"]
-
-        exclude:
-          - os: ubuntu-latest
-            compiler: llvm-latest
-        include:
-          - os: windows-latest
-            compiler: msvc
-            generator: "Visual Studio 17 2022"
-            build_type: Debug
-          - os: windows-latest
-            compiler: msvc
-            generator: "Visual Studio 17 2022"
-            build_type: Release
 
     steps:
       - name: Checkout
@@ -44,7 +29,7 @@ jobs:
           vcpkgGitCommitId: b86c0c35b88e2bf3557ff49dc831689c2f085090
 
       - name: Configure CMake
-        run: cmake -B ./build -DCMAKE_TOOLCHAIN_FILE:STRING=${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake -G "${{matrix.generator}}" -DCMAKE_BUILD_TYPE:STRING=${{matrix.build_type}}
+        run: cmake -B ./build -DCMAKE_TOOLCHAIN_FILE:STRING=${{ github.workspace }}/vcpkg/scripts/buildsystems/vcpkg.cmake -DCMAKE_BUILD_TYPE:STRING=${{matrix.build_type}}
 
       - name: Build
         run: cmake --build ./build --config ${{matrix.build_type}}
