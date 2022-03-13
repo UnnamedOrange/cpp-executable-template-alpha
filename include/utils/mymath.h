@@ -12,4 +12,4 @@ namespace app::utils::mymath
      * @return int The sum of the two numbers.
      */
     int add(int a1, int a2);
-} // namespace App::utils::mymath
+} // namespace app::utils::mymath
