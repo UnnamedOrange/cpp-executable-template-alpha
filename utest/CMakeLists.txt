@@ -39,7 +39,7 @@ file(GLOB_RECURSE test_sources CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/so
 
 # Create executable #
 
-add_executable(${PROJECT_NAME} ${test_sources} ${app_sources} ${app_headers})
+add_executable(${PROJECT_NAME} ${test_sources} ${app_sources} ${app_headers_h} ${app_headers_hpp})
 set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD ${CMAKE_CXX_STANDARD})
 if(MSVC)
   target_compile_options(${PROJECT_NAME} PRIVATE /W4 /WX)
@@ -47,6 +47,7 @@ else()
   target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Wpedantic -Werror)
 endif()
 target_include_directories(${PROJECT_NAME} PRIVATE ${app_include_directory})
+target_include_directories(${PROJECT_NAME} PRIVATE "${CMAKE_BINARY_DIR}/include")
 
 # Link libraries #
 

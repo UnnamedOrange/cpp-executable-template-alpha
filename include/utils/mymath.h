@@ -2,7 +2,7 @@
 
 #include <type_traits>
 
-namespace App::utils::mymath
+namespace app::utils::mymath
 {
     /**
      * @brief Calculate the sum of the two parameters.

@@ -36,11 +36,13 @@ find_package(fmt CONFIG REQUIRED)
 set(app_main_source "${CMAKE_CURRENT_SOURCE_DIR}/source/main.cpp")
 file(GLOB_RECURSE app_sources CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/source/*/*.cpp")
 set(app_include_directory "${CMAKE_CURRENT_SOURCE_DIR}/include")
-file(GLOB_RECURSE app_headers CONFIGURE_DEPENDS "${app_include_directory}/*.h")
+configure_file("${app_include_directory}/app_config.hpp.in" "${CMAKE_BINARY_DIR}/include/app_config.hpp" ESCAPE_QUOTES)
+file(GLOB_RECURSE app_headers_h CONFIGURE_DEPENDS "${app_include_directory}/*.h")
+file(GLOB_RECURSE app_headers_hpp CONFIGURE_DEPENDS "${app_include_directory}/*.hpp")
 
 # Create executable #
 
-add_executable(${PROJECT_NAME} ${app_main_source} ${app_sources} ${app_headers})
+add_executable(${PROJECT_NAME} ${app_main_source} ${app_sources} ${app_headers_h} ${app_headers_hpp})
 set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD ${CMAKE_CXX_STANDARD})
 if(MSVC)
   target_compile_options(${PROJECT_NAME} PRIVATE /W4 /WX)
@@ -48,6 +50,7 @@ else()
   target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Wpedantic -Werror)
 endif()
 target_include_directories(${PROJECT_NAME} PRIVATE ${app_include_directory})
+target_include_directories(${PROJECT_NAME} PRIVATE "${CMAKE_BINARY_DIR}/include")
 
 # Setup IDE #
 

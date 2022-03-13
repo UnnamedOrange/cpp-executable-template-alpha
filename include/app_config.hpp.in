@@ -1,0 +1,26 @@
+#pragma once
+
+#include <string>
+#include <string_view>
+
+namespace app::config
+{
+    constexpr std::string_view project_name = "@PROJECT_NAME@";
+    constexpr std::string_view project_version = "@PROJECT_VERSION@";
+    constexpr int project_version_major
+    {
+        @PROJECT_VERSION_MAJOR@
+    };
+    constexpr int project_version_minor
+    {
+        @PROJECT_VERSION_MINOR@
+    };
+    constexpr int project_version_patch
+    {
+        @PROJECT_VERSION_PATCH@
+    };
+    constexpr int project_version_tweak
+    {
+        @PROJECT_VERSION_TWEAK@
+    };
+} // namespace app::config
