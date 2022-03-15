@@ -4,7 +4,6 @@ cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_EXTENSIONS OFF)
-set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
 # Note: Add something here if you need.
 
 # Project #
@@ -49,6 +48,9 @@ file(GLOB_RECURSE app_headers_hpp CONFIGURE_DEPENDS "${app_include_directory}/*.
 add_executable(
   ${PROJECT_NAME} ${app_main_source} ${app_sources} ${app_headers_h} ${app_headers_hpp}
 )
+set_target_properties(
+  ${PROJECT_NAME} PROPERTIES RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin"
+)
 set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD ${CMAKE_CXX_STANDARD})
 if(MSVC)
   target_compile_options(${PROJECT_NAME} PRIVATE /W4 /WX)
@@ -67,14 +69,15 @@ foreach(one_asset_file ${asset_files})
   set(asset_destination "$<TARGET_FILE_DIR:${PROJECT_NAME}>/${asset_relative}")
   get_filename_component(asset_destination_dir "${asset_destination}" DIRECTORY)
   add_custom_command(
-    TARGET ${PROJECT_NAME} POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E make_directory
-    ${asset_destination_dir})
+    TARGET ${PROJECT_NAME}
+    POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E make_directory ${asset_destination_dir}
+  )
   add_custom_command(
-    TARGET ${PROJECT_NAME} POST_BUILD
-    COMMAND ${CMAKE_COMMAND} -E copy
-    ${one_asset_file}
-    ${asset_destination_dir})
+    TARGET ${PROJECT_NAME}
+    POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy ${one_asset_file} ${asset_destination_dir}
+  )
 endforeach()
 
 # Setup IDE #
