@@ -5,4 +5,5 @@ BraceWrapping:
   AfterCaseLabel: true
   AfterUnion: true
 ColumnLimit: 80
+IncludeBlocks: Regroup
 NamespaceIndentation: All
