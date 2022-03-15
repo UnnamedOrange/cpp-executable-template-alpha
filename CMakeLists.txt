@@ -4,6 +4,7 @@ cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_EXTENSIONS OFF)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/bin")
 # Note: Add something here if you need.
 
 # Project #
@@ -33,8 +34,8 @@ find_package(fmt CONFIG REQUIRED)
 
 # Add source files #
 
-set(app_main_source "${CMAKE_CURRENT_SOURCE_DIR}/source/main.cpp")
-file(GLOB_RECURSE app_sources CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/source/*/*.cpp")
+set(app_main_source "${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp")
+file(GLOB_RECURSE app_sources CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/*/*.cpp")
 set(app_include_directory "${CMAKE_CURRENT_SOURCE_DIR}/include")
 configure_file(
   "${app_include_directory}/app_config.hpp.in" "${CMAKE_BINARY_DIR}/include/app_config.hpp"
@@ -51,11 +52,30 @@ add_executable(
 set_target_properties(${PROJECT_NAME} PROPERTIES CXX_STANDARD ${CMAKE_CXX_STANDARD})
 if(MSVC)
   target_compile_options(${PROJECT_NAME} PRIVATE /W4 /WX)
+  target_compile_options(${PROJECT_NAME} PRIVATE /permissive)
 else()
   target_compile_options(${PROJECT_NAME} PRIVATE -Wall -Wextra -Wpedantic -Werror)
 endif()
 target_include_directories(${PROJECT_NAME} PRIVATE ${app_include_directory})
 target_include_directories(${PROJECT_NAME} PRIVATE "${CMAKE_BINARY_DIR}/include")
+
+# Copy assets #
+
+file(GLOB_RECURSE asset_files "${CMAKE_CURRENT_SOURCE_DIR}/asset/*")
+foreach(one_asset_file ${asset_files})
+  file(RELATIVE_PATH asset_relative "${CMAKE_CURRENT_SOURCE_DIR}/asset/" "${one_asset_file}")
+  set(asset_destination "$<TARGET_FILE_DIR:${PROJECT_NAME}>/${asset_relative}")
+  get_filename_component(asset_destination_dir "${asset_destination}" DIRECTORY)
+  add_custom_command(
+    TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E make_directory
+    ${asset_destination_dir})
+  add_custom_command(
+    TARGET ${PROJECT_NAME} POST_BUILD
+    COMMAND ${CMAKE_COMMAND} -E copy
+    ${one_asset_file}
+    ${asset_destination_dir})
+endforeach()
 
 # Setup IDE #
 
