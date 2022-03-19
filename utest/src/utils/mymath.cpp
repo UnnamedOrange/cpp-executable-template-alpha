@@ -1,7 +1,8 @@
-#include <gtest/gtest.h>
+#include "utils/mymath.h"
 
-#include <app_config.hpp>
-#include <utils/mymath.h>
+#include "app_config.hpp"
+
+#include <gtest/gtest.h>
 
 using namespace app::utils::mymath;
 
