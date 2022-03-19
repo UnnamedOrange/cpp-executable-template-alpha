@@ -3,6 +3,7 @@ cmake_minimum_required(VERSION 3.16 FATAL_ERROR)
 # Preproject #
 
 set(CMAKE_CXX_STANDARD 20)
+set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 # Note: Add something here if you need.
 
@@ -79,6 +80,14 @@ foreach(one_asset_file ${asset_files})
     COMMAND ${CMAKE_COMMAND} -E copy ${one_asset_file} ${asset_destination_dir}
   )
 endforeach()
+
+# Set sanitizer #
+
+target_compile_options(${PROJECT_NAME} PRIVATE $<$<CONFIG:Debug>:-fsanitize=address>)
+target_link_options(
+  ${PROJECT_NAME} PRIVATE
+  $<$<AND:$<NOT:$<CXX_COMPILER_ID:MSVC>>,$<CONFIG:Debug>>:-fsanitize=address>
+)
 
 # Setup IDE #
 
