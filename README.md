@@ -17,6 +17,22 @@ Considering the simplicity and the demands, this template does **NOT** includes 
 - **NO** fuzz test or mock test.
 - **NO** configuration for warning levels. The warning level is high and warnings are treated as errors.
 
+## Guides of this template
+
+Thank you for choosing this template! Below are the recommended usages of it. I assume that you are running your computer on Windows --- if not, I believe you are adequately capable of finding corresponding solutions on your own.
+
+### Install [Visual Studio](https://visualstudio.microsoft.com/)
+
+Although CMake Application tends to be cross-platform, it is required to install Visual Studio on Windows before using the package manager vcpkg. For individual developers, please download the Community distribution for free.
+
+The core of Visual Studio includes an advanced code editor and an elaborate project manager. However, there is no compiler to be installed by default, so before starting to install, you should check desktop applications in C++ to install the compiler *MSVC*. **For this template, you should also check *C++ AddressSanitizer*.** Other options, such as CMake and Google Test Adapter, are unnecessary.
+
+For non-English users, it also requires installing the English language pack to make vcpkg work well.
+
+### Setup [vcpkg](https://github.com/microsoft/vcpkg)
+
+You can simply follow [the official guide](https://github.com/microsoft/vcpkg#quick-start-windows).
+
 ## Credits and relevant repositories
 
 - [TheLartians](https://github.com/TheLartians) / [ModernCppStarter](https://github.com/TheLartians/ModernCppStarter)
